@@ -38,10 +38,10 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* MODEM type: one shall be 1 the other shall be 0 */
-#define USE_MODEM_LORA  1
-#define USE_MODEM_FSK   0
+#define USE_MODEM_LORA  0
+#define USE_MODEM_FSK   1
 
-#define RF_FREQUENCY                                868000000 /* Hz */
+#define RF_FREQUENCY                                900000000 /* Hz */
 
 #ifndef TX_OUTPUT_POWER   /* please, to change this value, redefine it in USER CODE SECTION */
 #define TX_OUTPUT_POWER                             14        /* dBm */
