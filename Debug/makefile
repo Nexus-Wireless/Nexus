@@ -66,8 +66,8 @@ all: main-build
 main-build: SubGHz_Phy_PingPong.elf secondary-outputs
 
 # Tool invocations
-SubGHz_Phy_PingPong.elf SubGHz_Phy_PingPong.map: $(OBJS) $(USER_OBJS) /Users/sorani/Developer/embedded/STM32CubeIDE/SubGHz_Phy_PingPong/STM32CubeIDE/STM32WL55JCIX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "SubGHz_Phy_PingPong.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/sorani/Developer/embedded/STM32CubeIDE/SubGHz_Phy_PingPong/STM32CubeIDE/STM32WL55JCIX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SubGHz_Phy_PingPong.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+SubGHz_Phy_PingPong.elf SubGHz_Phy_PingPong.map: $(OBJS) $(USER_OBJS) ../STM32WL55JCIX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "SubGHz_Phy_PingPong.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"../STM32WL55JCIX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SubGHz_Phy_PingPong.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
