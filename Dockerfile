@@ -3,12 +3,12 @@ LABEL Description="Build environment for embedded systems"
 
 WORKDIR /tmp
 
-RUN apt-get update && apt-get install -y libtool git make pkg-config texinfo udev libusb-dev libusb-1.0.0-dev libftdi-dev autoconf && \
+RUN apt-get update && apt-get install -y libtool git make fd-find pkg-config gcc-arm-none-eabi texinfo udev libusb-dev libusb-1.0.0-dev libftdi-dev autoconf && \
     git clone --depth 1 git://git.code.sf.net/p/openocd/code openocd && \
     cd openocd &&\
     ./bootstrap &&\
     ./configure --enable-stlink --enable-ftdi --disable-dependency-tracking &&\
-    make &&\
+    make && \
     make install
 
 # RUN git clone git://github.com/Dashlane/hidapi.git && \
@@ -20,12 +20,6 @@ RUN apt-get update && apt-get install -y libtool git make pkg-config texinfo ude
 
 RUN cp /tmp/openocd/contrib/60-openocd.rules /etc/udev/rules.d/60-openocd.rules
 
-RUN mkdir -p /usr/src/app
-VOLUME ["/usr/src/app"]
-WORKDIR /usr/src/app
-RUN cd /usr/src/app
-
-EXPOSE 4444
 
 # WORKDIR /opt
 
