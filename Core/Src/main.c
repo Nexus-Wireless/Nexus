@@ -56,9 +56,8 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-    // APP_LOG(TS_OFF, VLEVEL_OFF, "Sensor1: %d\n\r", AD_RES_BUFFER[0]);
-    // APP_LOG(TS_OFF, VLEVEL_OFF, "Sensor2: %d\n\r", AD_RES_BUFFER[1]);
-    // APP_LOG(TS_OFF, VLEVEL_OFF, "BRUHHH");
+    APP_LOG(TS_OFF, VLEVEL_OFF, "Sensor1: %d\n\r", AD_RES_BUFFER[0]);
+    APP_LOG(TS_OFF, VLEVEL_OFF, "Sensor2: %d\n\r", AD_RES_BUFFER[1]);
   }
 }
 
