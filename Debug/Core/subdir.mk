@@ -20,12 +20,14 @@ C_SRCS += \
 ../Core/Src/sysmem.c \
 ../Core/Src/timer_if.c \
 ../Core/Src/usart.c \
-../Core/Src/usart_if.c 
+../Core/Src/usart_if.c \
+../Core/Src/tim.c \
 
 OBJS += \
 ./Core/dma.o \
 ./Core/gpio.o \
 ./Core/adc.o \
+./Core/tim.o \
 ./Core/main.o \
 ./Core/rtc.o \
 ./Core/stm32_lpm_if.o \
@@ -38,7 +40,7 @@ OBJS += \
 ./Core/sysmem.o \
 ./Core/timer_if.o \
 ./Core/usart.o \
-./Core/usart_if.o 
+./Core/usart_if.o \
 
 C_DEPS += \
 ./Core/dma.d \
@@ -56,16 +58,19 @@ C_DEPS += \
 ./Core/sysmem.d \
 ./Core/timer_if.d \
 ./Core/usart.d \
-./Core/usart_if.d 
+./Core/usart_if.d \
+./Core/tim.d \
 
 
 # Each subdirectory must supply rules for building sources it contributes
 Core/dma.o: ../Core/Src/dma.c Core/subdir.mk
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DCORE_CM4 -DUSE_HAL_DRIVER -DSTM32WL55xx -c -I../Core/Inc -I../SubGHz_Phy/App -I../../SubGHz_Phy/Target -I../Utilities/trace/adv_trace -I../Drivers/STM32WLxx_HAL_Driver/Inc -I../Utilities/misc -I../Utilities/sequencer -I../Utilities/timer -I../Utilities/lpm/tiny_lpm -I../Drivers/CMSIS/Device/ST/STM32WLxx/Include -I../../Middlewares/Third_Party/SubGHz_Phy -I../../Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver -I../Drivers/CMSIS/Include -I../Drivers/BSP/STM32WLxx_Nucleo -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/gpio.o: ../Core/Src/gpio.c Core/subdir.mk
-		arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DCORE_CM4 -DUSE_HAL_DRIVER -DSTM32WL55xx -c -I../Core/Inc -I../SubGHz_Phy/App -I../../SubGHz_Phy/Target -I../Utilities/trace/adv_trace -I../Drivers/STM32WLxx_HAL_Driver/Inc -I../Utilities/misc -I../Utilities/sequencer -I../Utilities/timer -I../Utilities/lpm/tiny_lpm -I../Drivers/CMSIS/Device/ST/STM32WLxx/Include -I../../Middlewares/Third_Party/SubGHz_Phy -I../../Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver -I../Drivers/CMSIS/Include -I../Drivers/BSP/STM32WLxx_Nucleo -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DCORE_CM4 -DUSE_HAL_DRIVER -DSTM32WL55xx -c -I../Core/Inc -I../SubGHz_Phy/App -I../../SubGHz_Phy/Target -I../Utilities/trace/adv_trace -I../Drivers/STM32WLxx_HAL_Driver/Inc -I../Utilities/misc -I../Utilities/sequencer -I../Utilities/timer -I../Utilities/lpm/tiny_lpm -I../Drivers/CMSIS/Device/ST/STM32WLxx/Include -I../../Middlewares/Third_Party/SubGHz_Phy -I../../Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver -I../Drivers/CMSIS/Include -I../Drivers/BSP/STM32WLxx_Nucleo -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/adc.o: ../Core/Src/adc.c Core/subdir.mk
-		arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DCORE_CM4 -DUSE_HAL_DRIVER -DSTM32WL55xx -c -I../Core/Inc -I../SubGHz_Phy/App -I../../SubGHz_Phy/Target -I../Utilities/trace/adv_trace -I../Drivers/STM32WLxx_HAL_Driver/Inc -I../Utilities/misc -I../Utilities/sequencer -I../Utilities/timer -I../Utilities/lpm/tiny_lpm -I../Drivers/CMSIS/Device/ST/STM32WLxx/Include -I../../Middlewares/Third_Party/SubGHz_Phy -I../../Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver -I../Drivers/CMSIS/Include -I../Drivers/BSP/STM32WLxx_Nucleo -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DCORE_CM4 -DUSE_HAL_DRIVER -DSTM32WL55xx -c -I../Core/Inc -I../SubGHz_Phy/App -I../../SubGHz_Phy/Target -I../Utilities/trace/adv_trace -I../Drivers/STM32WLxx_HAL_Driver/Inc -I../Utilities/misc -I../Utilities/sequencer -I../Utilities/timer -I../Utilities/lpm/tiny_lpm -I../Drivers/CMSIS/Device/ST/STM32WLxx/Include -I../../Middlewares/Third_Party/SubGHz_Phy -I../../Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver -I../Drivers/CMSIS/Include -I../Drivers/BSP/STM32WLxx_Nucleo -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
+Core/tim.o: ../Core/Src/tim.c Core/subdir.mk
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DCORE_CM4 -DUSE_HAL_DRIVER -DSTM32WL55xx -c -I../Core/Inc -I../SubGHz_Phy/App -I../../SubGHz_Phy/Target -I../Utilities/trace/adv_trace -I../Drivers/STM32WLxx_HAL_Driver/Inc -I../Utilities/misc -I../Utilities/sequencer -I../Utilities/timer -I../Utilities/lpm/tiny_lpm -I../Drivers/CMSIS/Device/ST/STM32WLxx/Include -I../../Middlewares/Third_Party/SubGHz_Phy -I../../Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver -I../Drivers/CMSIS/Include -I../Drivers/BSP/STM32WLxx_Nucleo -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/main.o: ../Core/Src/main.c Core/subdir.mk
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DCORE_CM4 -DUSE_HAL_DRIVER -DSTM32WL55xx -c -I../Core/Inc -I../SubGHz_Phy/App -I../../SubGHz_Phy/Target -I../Utilities/trace/adv_trace -I../Drivers/STM32WLxx_HAL_Driver/Inc -I../Utilities/misc -I../Utilities/sequencer -I../Utilities/timer -I../Utilities/lpm/tiny_lpm -I../Drivers/CMSIS/Device/ST/STM32WLxx/Include -I../../Middlewares/Third_Party/SubGHz_Phy -I../../Middlewares/Third_Party/SubGHz_Phy/stm32_radio_driver -I../Drivers/CMSIS/Include -I../Drivers/BSP/STM32WLxx_Nucleo -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/rtc.o: ../Core/Src/rtc.c Core/subdir.mk
@@ -94,6 +99,6 @@ Core/usart_if.o: ../Core/Src/usart_if.c Core/subdir.mk
 clean: clean-Application-2f-User-2f-Core
 
 clean-Application-2f-User-2f-Core:
-	-$(RM) ./Core/dma.cyclo ./Core/dma.d ./Core/dma.o ./Core/dma.su ./Core/gpio.cyclo ./Core/gpio.d ./Core/gpio.o ./Core/gpio.su ./Core/main.cyclo ./Core/main.d ./Core/main.o ./Core/main.su ./Core/rtc.cyclo ./Core/rtc.d ./Core/rtc.o ./Core/rtc.su ./Core/stm32_lpm_if.cyclo ./Core/stm32_lpm_if.d ./Core/stm32_lpm_if.o ./Core/stm32_lpm_if.su ./Core/stm32wlxx_hal_msp.cyclo ./Core/stm32wlxx_hal_msp.d ./Core/stm32wlxx_hal_msp.o ./Core/stm32wlxx_hal_msp.su ./Core/stm32wlxx_it.cyclo ./Core/stm32wlxx_it.d ./Core/stm32wlxx_it.o ./Core/stm32wlxx_it.su ./Core/subghz.cyclo ./Core/subghz.d ./Core/subghz.o ./Core/subghz.su ./Core/sys_app.cyclo ./Core/sys_app.d ./Core/sys_app.o ./Core/sys_app.su ./Core/sys_debug.cyclo ./Core/sys_debug.d ./Core/sys_debug.o ./Core/sys_debug.su ./Core/syscalls.cyclo ./Core/syscalls.d ./Core/syscalls.o ./Core/syscalls.su ./Core/sysmem.cyclo ./Core/sysmem.d ./Core/sysmem.o ./Core/sysmem.su ./Core/timer_if.cyclo ./Core/timer_if.d ./Core/timer_if.o ./Core/timer_if.su ./Core/usart.cyclo ./Core/usart.d ./Core/usart.o ./Core/usart.su ./Core/usart_if.cyclo ./Core/usart_if.d ./Core/usart_if.o ./Core/usart_if.su ./Core/adc.cyclo ./Core/adc.d ./Core/adc.o ./Core/adc.su
+	-$(RM) ./Core/dma.cyclo ./Core/dma.d ./Core/dma.o ./Core/dma.su ./Core/gpio.cyclo ./Core/gpio.d ./Core/gpio.o ./Core/gpio.su ./Core/main.cyclo ./Core/main.d ./Core/main.o ./Core/main.su ./Core/rtc.cyclo ./Core/rtc.d ./Core/rtc.o ./Core/rtc.su ./Core/stm32_lpm_if.cyclo ./Core/stm32_lpm_if.d ./Core/stm32_lpm_if.o ./Core/stm32_lpm_if.su ./Core/stm32wlxx_hal_msp.cyclo ./Core/stm32wlxx_hal_msp.d ./Core/stm32wlxx_hal_msp.o ./Core/stm32wlxx_hal_msp.su ./Core/stm32wlxx_it.cyclo ./Core/stm32wlxx_it.d ./Core/stm32wlxx_it.o ./Core/stm32wlxx_it.su ./Core/subghz.cyclo ./Core/subghz.d ./Core/subghz.o ./Core/subghz.su ./Core/sys_app.cyclo ./Core/sys_app.d ./Core/sys_app.o ./Core/sys_app.su ./Core/sys_debug.cyclo ./Core/sys_debug.d ./Core/sys_debug.o ./Core/sys_debug.su ./Core/syscalls.cyclo ./Core/syscalls.d ./Core/syscalls.o ./Core/syscalls.su ./Core/sysmem.cyclo ./Core/sysmem.d ./Core/sysmem.o ./Core/sysmem.su ./Core/timer_if.cyclo ./Core/timer_if.d ./Core/timer_if.o ./Core/timer_if.su ./Core/usart.cyclo ./Core/usart.d ./Core/usart.o ./Core/usart.su ./Core/usart_if.cyclo ./Core/usart_if.d ./Core/usart_if.o ./Core/usart_if.su ./Core/adc.cyclo ./Core/adc.d ./Core/adc.o ./Core/adc.su ./Core/tim.cyclo ./Core/tim.d ./Core/tim.o ./Core/tim.su
 
 .PHONY: clean-Application-2f-User-2f-Core

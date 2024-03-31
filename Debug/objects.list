@@ -1,6 +1,7 @@
 "./Core/dma.o"
 "./Core/gpio.o"
 "./Core/adc.o"
+"./Core/tim.o"
 "./Core/main.o"
 "./Core/rtc.o"
 "./Core/stm32_lpm_if.o"

@@ -9,6 +9,7 @@
 #include "adc.h"
 #include "app_subghz_phy.h"
 #include "gpio.h"
+// #include "tim.h"
 #include "sys_app.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -55,8 +56,9 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-    APP_LOG(TS_OFF, VLEVEL_L, "Sensor1: %d\n\r", AD_RES_BUFFER[0]);
-    APP_LOG(TS_OFF, VLEVEL_L, "Sensor2: %d\n\r", AD_RES_BUFFER[1]);
+    // APP_LOG(TS_OFF, VLEVEL_OFF, "Sensor1: %d\n\r", AD_RES_BUFFER[0]);
+    // APP_LOG(TS_OFF, VLEVEL_OFF, "Sensor2: %d\n\r", AD_RES_BUFFER[1]);
+    // APP_LOG(TS_OFF, VLEVEL_OFF, "BRUHHH");
   }
 }
 
