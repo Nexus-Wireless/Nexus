@@ -6,7 +6,6 @@
   */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "adc.h"
 #include "app_subghz_phy.h"
 #include "gpio.h"
 // #include "tim.h"
@@ -21,7 +20,7 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-uint16_t AD_RES_BUFFER[2];
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 
@@ -47,17 +46,12 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_ADC_Init();
   MX_GPIO_Init();
-  // MX_SubGHz_Phy_Init();
+  MX_SubGHz_Phy_Init();
 
-
-
-  HAL_ADCEx_Calibration_Start(&hadc);
-  HAL_ADC_Start_DMA(&hadc, AD_RES_BUFFER, 2);
   /* Infinite loop */
   while (1)
   {
-    APP_LOG(TS_OFF, VLEVEL_OFF, "Sensor1: %d\n\r", AD_RES_BUFFER[0]);
-    APP_LOG(TS_OFF, VLEVEL_OFF, "Sensor2: %d\n\r", AD_RES_BUFFER[1]);
+    MX_SubGHz_Phy_Process();
   }
 }
 

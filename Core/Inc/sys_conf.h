@@ -41,7 +41,7 @@ extern "C" {
 /**
   * @brief  Verbose level for all trace logs
   */
-#define VERBOSE_LEVEL                        VLEVEL_OFF
+#define VERBOSE_LEVEL                        VLEVEL_L
 
 /**
   * @brief Enable trace logs
@@ -75,7 +75,7 @@ extern "C" {
   * @brief Disable Low Power mode
   * @note  0: LowPowerMode enabled. MCU enters stop2 mode, 1: LowPowerMode disabled. MCU enters sleep mode only
   */
-#define LOW_POWER_DISABLE                    0
+#define LOW_POWER_DISABLE                    1
 
 /* USER CODE BEGIN EC */
 

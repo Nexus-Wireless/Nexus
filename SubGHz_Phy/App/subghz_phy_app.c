@@ -23,6 +23,7 @@
 #include "sys_app.h"
 #include "subghz_phy_app.h"
 #include "radio.h"
+#include "adc.h"
 
 /* USER CODE BEGIN Includes */
 #include "stm32_timer.h"
@@ -67,7 +68,7 @@ typedef enum
 #error PAYLOAD_LEN must be less or equal than MAX_APP_BUFFER_SIZE
 #endif /* (PAYLOAD_LEN > MAX_APP_BUFFER_SIZE) */
 /* wait for remote to be in Rx, before sending a Tx frame*/
-#define RX_TIME_MARGIN                200
+#define RX_TIME_MARGIN                1000
 /* Afc bandwidth in Hz */
 #define FSK_AFC_BANDWIDTH             83333
 /* LED blink Period*/
@@ -105,6 +106,8 @@ bool isMaster = true;
 /* the closest the random delays are, the longer it will
    take for the devices to sync when started simultaneously*/
 static int32_t random_delay;
+
+uint16_t AD_RES_BUFFER[2];
 
 /* USER CODE END PV */
 
@@ -149,6 +152,8 @@ static void OnledEvent(void *context);
   * @brief PingPong state machine implementation
   */
 static void PingPong_Process(void);
+
+static void tiny_snprintf_like(char *buf, uint32_t maxsize, const char *strFormat, ...);
 
 /* USER CODE END PFP */
 
@@ -238,6 +243,9 @@ void SubghzApp_Init(void)
   APP_LOG(TS_ON, VLEVEL_L, "rand=%d\n\r", random_delay);
   /*starts reception*/
   Radio.Rx(RX_TIMEOUT_VALUE + random_delay);
+
+  HAL_ADCEx_Calibration_Start(&hadc);
+  HAL_ADC_Start_DMA(&hadc, AD_RES_BUFFER, 2);
 
   /*register task to to be run in while(1) after Radio IT*/
   UTIL_SEQ_RegTask((1 << CFG_SEQ_Task_SubGHz_Phy_App_Process), UTIL_SEQ_RFU, PingPong_Process);
@@ -397,7 +405,7 @@ static void PingPong_Process(void)
             APP_LOG(TS_ON, VLEVEL_L, "..."
                     "PONG"
                     "\n\r");
-            APP_LOG(TS_ON, VLEVEL_L, "Slave  Tx start\n\r");
+            APP_LOG(TS_ON, VLEVEL_L, "Slave Tx start\n\r");
             memcpy(BufferTx, PONG, sizeof(PONG) - 1);
             Radio.Send(BufferTx, PAYLOAD_LEN);
           }
@@ -450,4 +458,16 @@ static void OnledEvent(void *context)
   UTIL_TIMER_Start(&timerLed);
 }
 
-/* USER CODE END PrFD */
+static void tiny_snprintf_like(char *buf, uint32_t maxsize, const char *strFormat, ...)
+{
+  /* USER CODE BEGIN tiny_snprintf_like_1 */
+
+  /* USER CODE END tiny_snprintf_like_1 */
+  va_list vaArgs;
+  va_start(vaArgs, strFormat);
+  UTIL_ADV_TRACE_VSNPRINTF(buf, maxsize, strFormat, vaArgs);
+  va_end(vaArgs);
+  /* USER CODE BEGIN tiny_snprintf_like_2 */
+
+  /* USER CODE END tiny_snprintf_like_2 */
+}
