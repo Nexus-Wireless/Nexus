@@ -28,7 +28,6 @@
 
 void MX_SubGHz_Phy_Init(void)
 {
-  SystemApp_Init();
   SubghzApp_Init();
 }
 

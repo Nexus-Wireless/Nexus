@@ -4,7 +4,7 @@
   * @author  Soran Ismail
   * @brief   Initializes HW and SW system entities (not related to the radio)
   ******************************************************************************
-
+**/
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
 #include "platform.h"

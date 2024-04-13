@@ -4,7 +4,7 @@
   * @author  Soran Ismail
   * @brief   Application of the SubGHz_Phy Middleware
   ******************************************************************************
-
+**/
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
 #include "sys_app.h"
@@ -79,7 +79,7 @@ bool isMaster = false;
    take for the devices to sync when started simultaneously*/
 static int32_t random_delay;
 
-uint16_t AD_RES_BUFFER[2];
+// uint16_t AD_RES_BUFFER[2];
 
 /* Private function prototypes -----------------------------------------------*/
 /*!
@@ -208,8 +208,8 @@ void SubghzApp_Init(void)
   Radio.Rx(RX_TIMEOUT_VALUE + random_delay);
 
   if (isMaster == true) {
-    HAL_ADCEx_Calibration_Start(&hadc);
-    HAL_ADC_Start_DMA(&hadc, AD_RES_BUFFER, 2);
+    // HAL_ADCEx_Calibration_Start(&hadc);
+    // HAL_ADC_Start_DMA(&hadc, AD_RES_BUFFER, 2);
     State = TX;
   }
 

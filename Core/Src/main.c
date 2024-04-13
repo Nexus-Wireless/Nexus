@@ -9,6 +9,8 @@
 #include "main.h"
 #include "app_subghz_phy.h"
 #include "gpio.h"
+#include "adc.h"
+#include "usart.h"
 // #include "tim.h"
 #include "sys_app.h"
 
@@ -21,6 +23,7 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint16_t AD_RES_BUFFER[2];
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -47,12 +50,15 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_ADC_Init();
   MX_GPIO_Init();
-  MX_SubGHz_Phy_Init();
+  MX_USART1_UART_Init();
+  // MX_SubGHz_Phy_Init();
 
   /* Infinite loop */
   while (1)
   {
-    MX_SubGHz_Phy_Process();
+    // MX_SubGHz_Phy_Process();
+    HAL_ADC_Start_DMA(&hadc, AD_RES_BUFFER, 2);
+    HAL_Delay(2000);
   }
 }
 
